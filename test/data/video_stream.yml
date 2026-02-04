@@ -1,0 +1,26 @@
+# configuration for a video stream.
+- backend: webrtc
+  codec:
+  - h264
+  controls:
+  - max: 255
+    min: 0
+    name: Brightness
+    options: []
+    step: 1
+    type: int
+    value: 128
+    writable: true
+  driver: uvcvideo
+  max_fps: 10
+  name: WebRTC camera stream
+  # signaling server / stream
+  stream_path: 'localhost:8080/stream1'
+  values:
+    codec: null
+    controls: null
+    encoding: rgb
+    fps: 10.0
+    resolution:
+    - 640
+    - 480

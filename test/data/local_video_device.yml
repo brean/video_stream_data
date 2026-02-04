@@ -1,0 +1,143 @@
+# Data we got from a local video device.
+- backend: v4l2
+  codec:
+  - MJPEG
+  - YUYV
+  controls:
+  - max: 255
+    min: 0
+    name: Brightness
+    options: []
+    step: 1
+    type: int
+    value: 128
+    writable: true
+  - max: 255
+    min: 0
+    name: Contrast
+    options: []
+    step: 1
+    type: int
+    value: 32
+    writable: true
+  - max: 100
+    min: 0
+    name: Saturation
+    options: []
+    step: 1
+    type: int
+    value: 64
+    writable: true
+  - max: 180
+    min: -180
+    name: Hue
+    options: []
+    step: 1
+    type: int
+    value: 0
+    writable: true
+  - max: 0
+    min: 0
+    name: White Balance, Automatic
+    options: []
+    step: 1
+    type: bool
+    value: true
+    writable: true
+  - max: 150
+    min: 90
+    name: Gamma
+    options: []
+    step: 1
+    type: int
+    value: 120
+    writable: true
+  - max: 0
+    min: 0
+    name: Power Line Frequency
+    options:
+    - - 0
+      - Disabled
+    - - 1
+      - 50 Hz
+    - - 2
+      - 60 Hz
+    step: 1
+    type: menu
+    value: 1
+    writable: true
+  - max: 6500
+    min: 2800
+    name: White Balance Temperature
+    options: []
+    step: 1
+    type: int
+    value: 4600
+    writable: true
+  - max: 7
+    min: 0
+    name: Sharpness
+    options: []
+    step: 1
+    type: int
+    value: 3
+    writable: true
+  - max: 2
+    min: 0
+    name: Backlight Compensation
+    options: []
+    step: 1
+    type: int
+    value: 1
+    writable: true
+  - max: 0
+    min: 0
+    name: Auto Exposure
+    options:
+    - - 1
+      - Manual Mode
+    - - 3
+      - Aperture Priority Mode
+    step: 1
+    type: menu
+    value: 3
+    writable: true
+  - max: 1250
+    min: 4
+    name: Exposure Time, Absolute
+    options: []
+    step: 1
+    type: int
+    value: 156
+    writable: true
+  - max: 0
+    min: 0
+    name: Exposure, Dynamic Framerate
+    options: []
+    step: 1
+    type: bool
+    value: true
+    writable: true
+  driver: uvcvideo
+  max_fps: 30.0
+  name: 'Dummy Camera'
+  resolutions:
+  - - 640
+    - 480
+  - - 320
+    - 240
+  - - 1280
+    - 720
+  stream_path: /dev/video0
+  values:
+    codec: MJPEG
+    controls:
+      Brightness: 255
+      Contrast: 255
+      Saturation: 0
+      Power Line Frequency: 2
+    encoding: passthrough
+    fps: 30.0
+    resolution:
+    - 640
+    - 480
