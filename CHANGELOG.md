@@ -1,3 +1,6 @@
+# 0.1.3
+Better default values
+
 # 0.1.2
 Fix: Update workflow - forgot to add 'steps'-part of yaml file
 

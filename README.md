@@ -32,6 +32,7 @@ classDiagram
 
     class Encoding {
         <<enumeration>>
+        +PASSTHROUGH: str = 'passthrough'
         +BGR: str = 'bgr'
         +GREY: str = 'grey'
         +GREY16: str = 'grey16'
@@ -43,28 +44,31 @@ classDiagram
 
     class Codec {
         <<enumeration>>
-        +MJPG: str = 'MJPG'  # Motion-JPEG
-        +YUYV: str = 'YUYV'  # 'YUYV 4:2:2'
-        +XVID: str = 'XVID'
+        +MJPEG: str = 'MJPEG'  # Motion-JPEG
+        +YUYV: str = 'YUYV'  # e.g. YUYV 4:2:2
+        +XVID: str = 'XVID'  # e.g. mp4 files
+        +UNKNOWN: str = 'unknown'
     }
 
     class StreamControl {
         +type: StreamControlType
         +name: str
-        +writable: bool
-        +min: float
-        +max: float
-        +step: int
-        +value: float | bool | None
-        +options: list
+        +writable: bool = False
+        +min: float = 0
+        +max: float = 0
+        +step: int = 1
+        +value: float | bool | None = None
+        +options: list = []
     }
 
     class StreamValue {
-        +resolution: list
-        +fps: float
-        +controls: list[StreamControl]
-        +encoding: Encoding
-        +codec: Codec
+        # desired video resolution
+        +resolution: list[int]
+        +fps: float  # desired FPS by user
+        # desired configuration
+        +controls: dict[str, int | float | bool | None]
+        +encoding: Encoding = Encoding.PASSTHROUGH
+        +codec: Codec = Codec.UNKNOWN
     }
 
     class StreamInfo {

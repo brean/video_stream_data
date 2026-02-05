@@ -101,9 +101,9 @@ class StreamValue:
     # selected control configurations
     controls: dict[str, int | float | bool | None]
     # selected encoding, e.g. bgr
-    encoding: Encoding
-    # selected codec e.g. "Motion-JPEG" or 'YUYV 4:2:2'
-    codec: Codec = None
+    encoding: Encoding = Encoding.PASSTHROUGH
+    # selected codec e.g. MJPEG for "Motion-JPEG" or YUYV for "YUYV 4:2:2"
+    codec: Codec = Codec.UNKNOWN
 
     def __post_init__(self):
         if self.encoding:
@@ -117,7 +117,8 @@ class StreamInfo:
     name: str
     # unique stream path
     stream_path: str
-    # driver from linuxpy e.g. uvcvideo
+    # driver for example "uvcvideo" for a local OpenCV webcam or
+    # "webrtc" for a WebRTC Video Stream
     driver: str
     # available codec
     codec: list[Codec]
