@@ -1,0 +1,88 @@
+name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-and-build:
+    name: Test and build Python 🐍 package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies for testing
+        run: >-
+          python3 -m
+          pip install
+          pyyaml pytest coverage pytest-cov
+
+      - name: Install video_stream_data
+        run: |
+          python3 -m pip install .
+
+      - name: Run tests with pytest
+        run: python3 -m coverage run --source video_stream_data -m pytest 
+
+      - name: Show basic test coverage report
+        run: python3 -m coverage report
+
+      - name: Install pypa/build
+        run: >-
+          python3 -m pip install build --user
+
+      - name: Build a binary wheel and a source tarball
+        run: python3 -m build
+
+      
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v5
+        with:
+          name: python-package-distributions
+          path: dist/
+
+  publish-to-pypi:
+    name: >-
+      Publish Python 🐍 distribution 📦 to PyPI
+    if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+    needs:
+    - test-and-build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/video_stream_data
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+
+  # publish-to-testpypi:
+  #   name: Publish Python 🐍 distribution 📦 to TestPyPI
+  #   needs:
+  #   - test-and-build
+  #   runs-on: ubuntu-latest
+
+  #   environment:
+  #     name: testpypi
+  #     url: https://test.pypi.org/p/<package-name>
+
+  #   permissions:
+  #     id-token: write  # IMPORTANT: mandatory for trusted publishing
+
+  #   steps:
+  #   - name: Download all the dists
+  #     uses: actions/download-artifact@v6
+  #     with:
+  #       name: python-package-distributions
+  #       path: dist/
+  #   - name: Publish distribution 📦 to TestPyPI
+  #     uses: pypa/gh-action-pypi-publish@release/v1
+  #     with:
+  #       repository-url: https://test.pypi.org/legacy/
